@@ -64,6 +64,8 @@ class EnemyController : MonoBehaviour
         if (Mathf.Abs(step.y) > Mathf.Abs(distanceToTarget.y)) { nextVelocity.y = 0; }
         selfRigidbody.velocity = nextVelocity;
 
+        Debug.Log(distanceToTarget);
+
         /////
 
         theTimer -= Time.deltaTime;

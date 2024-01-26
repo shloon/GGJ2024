@@ -29,14 +29,14 @@ public class EnemyManager : MonoBehaviour
         //Choose a new target for each enemy, which is the least populated of the three closest ones to it. Each enemy only has a 0.1 prob of doing this. (this should prevent oscillation)
         foreach (GameObject enemy in enemies)
         {
-            if (Random.Range(1,10) == 1)
+            if (Random.Range(1, 10) == 1)
             {
                 //choose a target around the player
                 //first sort the targets by distance:
                 Vector2 playerPosition = player.transform.position;
                 Vector3 thisPosition = enemy.transform.position;
                 //sort by distance and take the first 3
-                List<Transform> closest3 = possibleTargets.OrderBy(target => Vector2.Distance((Vector2)target.localPosition + playerPosition, thisPosition)).ToList().GetRange(0,3);
+                List<Transform> closest3 = possibleTargets.OrderBy(target => Vector2.Distance((Vector2)target.localPosition + playerPosition, thisPosition)).ToList().GetRange(0, 3);
                 //sort by population and take the first one (least populated)
                 enemy.GetComponent<EnemyController>().currentTarget = closest3.OrderBy(target => CountInTargetList(target)).First();
             }
@@ -48,7 +48,7 @@ public class EnemyManager : MonoBehaviour
         int count = 0;
         foreach (Transform trans in currentTargets)
         {
-            if (Transform.Equals(t,trans)) { count++; }
+            if (Transform.Equals(t, trans)) { count++; }
         }
         return count;
     }
