@@ -18,8 +18,8 @@ public class PlayerController : MonoBehaviour
     public Slider staminaBar;
     public float staminaIncreaseRate;
     // the oo in ooStamina is Out Of.
-    public float ooStaminaLockTimer = 1; 
-    float staminaLockTimer;
+    //public float ooStaminaLockTimer = 1; 
+    //float staminaLockTimer;
     bool hasNoStamina;
     [Header("Gun")]
     public GameObject theGun;
@@ -30,7 +30,7 @@ public class PlayerController : MonoBehaviour
     {
         staminaBar.value = 1;
         hpBar.value = 1;
-        staminaLockTimer = ooStaminaLockTimer;
+        //staminaLockTimer = ooStaminaLockTimer;
         isShooting = false;
         isSprinting = false;
         hasNoStamina = false;
@@ -61,17 +61,21 @@ public class PlayerController : MonoBehaviour
                 }
             }
         }
-        if(hasNoStamina)
-        {
-            staminaLockTimer-= Time.deltaTime;
-        }
-        if(staminaLockTimer<=0)
-        {
-            staminaLockTimer = ooStaminaLockTimer;
-            hasNoStamina = false;
-        }
+        //if(hasNoStamina)
+        //{
+        //    staminaLockTimer-= Time.deltaTime;
+        //}
+        //if(staminaLockTimer<=0)
+        //{
+        //    staminaLockTimer = ooStaminaLockTimer;
+        //    hasNoStamina = false;
+        //}
         if (Input.GetKeyUp(KeyCode.LeftShift))
+        {
             isSprinting = false;
+            if (hasNoStamina)
+                hasNoStamina = false;
+        }
             if (Input.GetKey(KeyCode.P))
         {
             if (staminaBar.value != 0)
@@ -88,7 +92,7 @@ public class PlayerController : MonoBehaviour
         }
         if (staminaBar.value != 1)
         {
-            if (!isShooting||!isSprinting)
+            if (!isShooting&&!isSprinting&&!hasNoStamina)
             {
                 staminaBar.value += staminaIncreaseRate * Time.deltaTime;
             }
