@@ -2110,9 +2110,11 @@ MonoBehaviour:
   playerObject: {fileID: 1788837045}
   playerRB: {fileID: 1788837050}
   speed: {x: 3, y: 3}
+  sprintSpeed: {x: 5, y: 5}
   hpBar: {fileID: 1641158847}
   staminaBar: {fileID: 931200053}
   staminaIncreaseRate: 0.1
+  ooStaminaLockTimer: 2
   theGun: {fileID: 493977302}
   staminaDecreaseRate: 0.5
   isShooting: 0
