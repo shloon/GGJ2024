@@ -55,7 +55,7 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
-            playerMovement = Vector2.Scale(movement, speed);
+            playerMovement = movement * speed;
         }
         playerRB.velocity = playerMovement;
 
