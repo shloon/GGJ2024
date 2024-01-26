@@ -123,11 +123,6 @@ class EnemyController : MonoBehaviour
             isNearEnemy = true;
             Debug.Log("near player");
         }
-        if (collision.gameObject.CompareTag("Spray"))
-        {
-            Debug.Log("Start Destroying");
-            isHurt = true;
-        }
     }
 
     private void OnCollisionExit2D(Collision2D collision)
@@ -136,7 +131,19 @@ class EnemyController : MonoBehaviour
         {
             isNearEnemy = false;
         }
-        if (collision.gameObject.CompareTag("Spray"))
+    }
+
+    private void OnTriggerEnter2D(Collider2D collider)
+    {
+        if (collider.gameObject.CompareTag("Spray"))
+        {
+            Debug.Log("Start Destroying");
+            isHurt = true;
+        }
+    }
+    private void OnTriggerExit2D(Collider2D collider)
+    {
+        if (collider.gameObject.CompareTag("Spray"))
         {
             isHurt = false;
         }
