@@ -2,6 +2,7 @@ using System.Collections;
 using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine.UI;
 
 class EnemyController : MonoBehaviour
 {
@@ -15,14 +16,17 @@ class EnemyController : MonoBehaviour
     public float speed;
 
     public Animator actorAnimator;
+    public Slider theSlider;
     public bool isNearEnemy;
     public float theTimer = 1f;
+    public bool isHurt;
 
     public AnimationClip hittingAnimationClip;
     public void Start()
     {
         isNearEnemy = false;
-
+        isHurt = false;
+        theSlider.value = 1f;
         yMovementFactor = player.yMovementFactor;
         currentTarget = possibleTargets[0];
         selfRigidbody = GetComponent<Rigidbody2D>();
@@ -45,22 +49,6 @@ class EnemyController : MonoBehaviour
 
         /////
         theTimer -= Time.deltaTime;
-        if (transform.position.x < 0)
-        {
-            if (playerPosition.x - (-thisPosition.x) >= 01f &&
-                playerPosition.x - (-thisPosition.x) >= 1.90f)
-            {
-                Invoke("AttackPlayer", 0.5f);
-            }
-        }
-        else
-        {
-            if (playerPosition.x - transform.position.x >= 0 &&
-                playerPosition.x - transform.position.x >= 1.90f)
-            {
-                Invoke("AttackPlayer", 0.5f);
-            }
-        }
 
         if (isNearEnemy)
         {
@@ -70,7 +58,29 @@ class EnemyController : MonoBehaviour
                 theTimer = 1f;
             }
         }
+        if (player.gameObject.transform.position.x - transform.position.x >= 0)
+        {
+            transform.localScale = new Vector3(-1, 1, 1);
+        }
+        if (player.gameObject.transform.position.x - transform.position.x <= 0)
+        {
+            transform.localScale = new Vector3(1, 1, 1);
+        }
+        if (isHurt)
+        {
+            TakeDamage();
+        }
+        if (theSlider.value <= 0)
+        {
+            Destroy(gameObject);
+        }
     }
+
+    public void TakeDamage()
+    {
+        theSlider.value -= 0.002f;
+    }
+
 
     IEnumerator AnimataionCoroutine()
     {
@@ -81,8 +91,12 @@ class EnemyController : MonoBehaviour
             actorAnimator.SetTrigger("Attack");
 
             yield return new WaitForSeconds(0.5f);
-            player.TakeDamage();
-            actorAnimator.ResetTrigger("Attack");
+            if (isNearEnemy)
+            {
+                player.TakeDamage();
+                actorAnimator.ResetTrigger("Attack");
+
+            }
             enemyWeapon.SetActive(false);
         }
     }
@@ -103,15 +117,27 @@ class EnemyController : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (!collision.gameObject.CompareTag("Player"))
-            return;
-
-        isNearEnemy = true;
-        Debug.Log("near player");
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            isNearEnemy = true;
+            Debug.Log("near player");
+        }
+        if (collision.gameObject.CompareTag("Spray"))
+        {
+            Debug.Log("Start Destroying");
+            isHurt = true;
+        }
     }
 
     private void OnCollisionExit2D(Collision2D collision)
     {
-        isNearEnemy = false;
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            isNearEnemy = false;
+        }
+        if (collision.gameObject.CompareTag("Spray"))
+        {
+            isHurt = false;
+        }
     }
 }

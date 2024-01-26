@@ -24,7 +24,9 @@ public class PlayerController : MonoBehaviour
     bool hasNoStamina;
 
     [Header("Gun")]
+    public GameObject Kane;
     public GameObject theGun;
+    public GameObject theSpray;
     public float staminaDecreaseRate;
     public bool isShooting;
 
@@ -64,7 +66,18 @@ public class PlayerController : MonoBehaviour
         // gun attack
         if (Input.GetKey(KeyCode.P))
         {
-            theGun.SetActive(staminaBar.value != 0);
+            if (staminaBar.value != 0)
+            {
+                theGun.SetActive(true);
+            }
+            else
+            {
+                theGun.SetActive(false);
+                theSpray.SetActive(false);
+            }
+            theSpray.transform.position = Kane.transform.position;
+            theSpray.SetActive(true);
+
             isShooting = true;
             staminaBar.value -= staminaDecreaseRate * Time.deltaTime;
         }
@@ -72,6 +85,7 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKeyUp(KeyCode.P))
         {
             theGun.SetActive(false);
+            theSpray.SetActive(false);
             isShooting = false;
         }
 
