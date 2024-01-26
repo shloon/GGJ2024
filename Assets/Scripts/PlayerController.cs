@@ -7,13 +7,14 @@ public class PlayerController : MonoBehaviour
     [Header("Player")]
     public GameObject playerObject;
     public Rigidbody2D playerRB;
-    public Vector2 speed;
+    public float speed;
     public Vector2 sprintSpeed;
     bool isSprinting;
     public Slider hpBar;
     public bool hasBeenHit;
     public float timer = 2f;
     float tempTimer;
+    public float yMovementFactor;
 
     [Header("Stamina")]
     public Slider staminaBar;
@@ -41,16 +42,9 @@ public class PlayerController : MonoBehaviour
 
         float horizontalInput = Input.GetAxisRaw("Horizontal");
         float verticalInput = Input.GetAxisRaw("Vertical");
-        Vector2 movement = new Vector2(horizontalInput, verticalInput).normalized;
-        movement = Vector2.Scale(movement, speed);
-        if (horizontalInput < 0)
-        {
-            transform.localScale = new Vector3(-1, 1, 1);
-        }
-        else
-        {
-            transform.localScale = new Vector3(1, 1, 1);
-        }
+
+        Vector2 movement = new Vector2(horizontalInput, verticalInput * yMovementFactor); //this vectror isn't normalized to emulate the movement in games like lf2 or "dad and I"
+        movement *= speed;
         playerRB.velocity = movement;
 
         Vector2 playerMovement;
@@ -109,6 +103,18 @@ public class PlayerController : MonoBehaviour
             {
                 staminaBar.value += staminaIncreaseRate * Time.deltaTime;
             }
+        }
+
+        //Face the direction of movement
+        if (Input.GetAxisRaw("Horizontal") > 0)
+        {
+            Vector3 temp = this.transform.localScale; temp.x = 1;
+            this.transform.localScale = temp;
+        }
+        else if (Input.GetAxisRaw("Horizontal") < 0)
+        {
+            Vector3 temp = this.transform.localScale; temp.x = -1;
+            this.transform.localScale = temp;
         }
 
         // game over handling
