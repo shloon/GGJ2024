@@ -73,11 +73,11 @@ class EnemyController : MonoBehaviour
         }
         if (player.gameObject.transform.position.x - transform.position.x >= 0)
         {
-            transform.localScale = new Vector3(-1, 1, 1);
+            transform.localScale = new Vector3(1, 1, 1);
         }
         if (player.gameObject.transform.position.x - transform.position.x <= 0)
         {
-            transform.localScale = new Vector3(1, 1, 1);
+            transform.localScale = new Vector3(-1, 1, 1);
         }
         if (isHurt)
         {
