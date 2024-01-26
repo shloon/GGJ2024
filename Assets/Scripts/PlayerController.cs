@@ -126,7 +126,6 @@ public class PlayerController : MonoBehaviour
 
         // actual movement handling
         Vector2 movement = new Vector2(horizontalInput, verticalInput * yMovementFactor); //this vectror isn't normalized to emulate the movement in games like lf2 or "dad and I"
-        movement *= speed;
         Vector2 playerMovement;
         if (Input.GetKey(KeyCode.LeftShift) && !hasNoStamina)
         {

@@ -2377,6 +2377,10 @@ PrefabInstance:
       propertyPath: staminaBar
       value: 
       objectReference: {fileID: 931200053}
+    - target: {fileID: 713403314463860298, guid: d1262cd9bcca21a47b20958b2c5e7d74, type: 3}
+      propertyPath: sprintSpeed
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 2202776098469498556, guid: d1262cd9bcca21a47b20958b2c5e7d74, type: 3}
       propertyPath: m_Name
       value: Player
