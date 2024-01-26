@@ -122,7 +122,7 @@ public class PlayerController : MonoBehaviour
             if (timer <= 0)
             {
                 Debug.Log("You need to take damage");
-                TakeDamage();
+                //TakeDamage();
                 timer = tempTimer;
             }
         }
