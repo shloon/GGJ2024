@@ -5,12 +5,20 @@ using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
-    [SerializeField] public GameObject playerObject;
+    [Header("Player")]
+    public GameObject playerObject;
     public Rigidbody2D playerRB;
-    public float speed;
-    [SerializeField] public GameObject theGun;
+    public Vector2 speed;
+
+    [Header("Stamina")]
     public Slider staminaBar;
+    public float staminaIncreaseRate;
+
+    [Header("Gun")]
+    public GameObject theGun;
+    public float staminaDecreaseRate;
     public bool isShooting;
+
     void Start()
     {
         staminaBar.value = 1;
@@ -22,7 +30,8 @@ public class PlayerController : MonoBehaviour
         float horizontalInput = Input.GetAxisRaw("Horizontal");
         float verticalInput = Input.GetAxisRaw("Vertical");
 
-        Vector2 movement = new Vector2(horizontalInput, verticalInput).normalized * speed;
+        Vector2 movement = new Vector2(horizontalInput, verticalInput).normalized;
+        movement = Vector2.Scale(movement, speed);
         playerRB.velocity = movement;
 
         if (Input.GetKey(KeyCode.P))
@@ -32,7 +41,7 @@ public class PlayerController : MonoBehaviour
             else
                 theGun.SetActive(false);
             isShooting = true;
-            staminaBar.value -= 0.0003f;
+            staminaBar.value -= staminaDecreaseRate * Time.deltaTime;
         }
         if (Input.GetKeyUp(KeyCode.P))
         {
@@ -43,7 +52,7 @@ public class PlayerController : MonoBehaviour
         {
             if (!isShooting)
             {
-                staminaBar.value += 0.0003f;
+                staminaBar.value += staminaIncreaseRate * Time.deltaTime;
             }
         }
     }

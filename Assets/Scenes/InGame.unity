@@ -1841,10 +1841,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerObject: {fileID: 1788837045}
   playerRB: {fileID: 1788837050}
-  speed: 3
-  theGun: {fileID: 493977302}
+  speed: {x: 3, y: 3}
   staminaBar: {fileID: 931200053}
+  staminaIncreaseRate: 0.1
+  theGun: {fileID: 493977302}
   isShooting: 0
+  staminaDecreaseRate: 0.5
 --- !u!70 &1788837049
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
