@@ -11,6 +11,9 @@ public class PlayerController : MonoBehaviour
     public Vector2 sprintSpeed;
     bool isSprinting;
     public Slider hpBar;
+    public bool hasBeenHit;
+    public float timer = 2f;
+    float tempTimer;
 
     [Header("Stamina")]
     public Slider staminaBar;
@@ -29,10 +32,13 @@ public class PlayerController : MonoBehaviour
         isShooting = false;
         isSprinting = false;
         hasNoStamina = false;
+        hasBeenHit = false;
+        tempTimer = timer;
     }
 
     void Update()
     {
+
         float horizontalInput = Input.GetAxisRaw("Horizontal");
         float verticalInput = Input.GetAxisRaw("Vertical");
         Vector2 movement = new Vector2(horizontalInput, verticalInput).normalized;
@@ -100,10 +106,53 @@ public class PlayerController : MonoBehaviour
         {
             SceneManager.LoadScene("GameOverScene");
         }
+        if (hasBeenHit)
+        {
+            timer -= Time.deltaTime;
+            if (timer <= 0)
+            {
+                Debug.Log("You need to take damage");
+                TakeDamage();
+                timer = tempTimer;
+            }
+        }
     }
 
     public void KillPlayer()
     {
         hpBar.value = 0;
     }
+
+    public void TakeDamage()
+    {
+        hpBar.value -= 0.1f;
+        Debug.Log(hpBar.value);
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+
+        if (collision.gameObject.tag == "Stopper")
+        {
+            Debug.Log("Touched Wall");
+        }
+
+        if (collision.gameObject.tag == "Enemy")
+        {
+            hasBeenHit = true;
+
+        }
+
+    }
+
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        if (hasBeenHit)
+        {
+            hasBeenHit = false;
+            timer = tempTimer;
+
+        }
+    }
+
 }
