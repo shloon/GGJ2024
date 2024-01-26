@@ -42,6 +42,16 @@ public class PlayerController : MonoBehaviour
         float horizontalInput = Input.GetAxisRaw("Horizontal");
         float verticalInput = Input.GetAxisRaw("Vertical");
         Vector2 movement = new Vector2(horizontalInput, verticalInput).normalized;
+        movement = Vector2.Scale(movement, speed);
+        if (horizontalInput < 0)
+        {
+            transform.localScale = new Vector3(-1, 1, 1);
+        }
+        else
+        {
+            transform.localScale = new Vector3(1, 1, 1);
+        }
+        playerRB.velocity = movement;
 
         Vector2 playerMovement;
         if (Input.GetKey(KeyCode.LeftShift) && !hasNoStamina)
