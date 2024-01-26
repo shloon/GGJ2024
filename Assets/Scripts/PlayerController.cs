@@ -68,15 +68,15 @@ public class PlayerController : MonoBehaviour
         {
             if (staminaBar.value != 0)
             {
+                theSpray.transform.position = Kane.transform.position;
                 theGun.SetActive(true);
+                theSpray.SetActive(true);
             }
             else
             {
                 theGun.SetActive(false);
                 theSpray.SetActive(false);
             }
-            theSpray.transform.position = Kane.transform.position;
-            theSpray.SetActive(true);
 
             isShooting = true;
             staminaBar.value -= staminaDecreaseRate * Time.deltaTime;
