@@ -151,6 +151,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6958662040181698395}
+  - {fileID: 946504801284560389}
   m_Father: {fileID: 345838884864375463}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &8709105307413830772
@@ -311,17 +312,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4699c1ad676e70c4ea573250229269fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hpBar: {fileID: 0}
+  staminaBar: {fileID: 0}
   playerObject: {fileID: 2202776098469498556}
   playerRB: {fileID: 6551997634865118121}
   speed: 3
-  sprintSpeed: {x: 5, y: 5}
-  hpBar: {fileID: 0}
+  sprintSpeed: 0
   hasBeenHit: 0
   timer: 2
   yMovementFactor: 0.5
-  staminaBar: {fileID: 0}
   staminaIncreaseRate: 0.1
+  Kane: {fileID: 0}
   theGun: {fileID: 4706208243081395205}
+  theSpray: {fileID: 0}
   staminaDecreaseRate: 0.3
   isShooting: 0
 --- !u!50 &6551997634865118121
@@ -447,6 +450,37 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6029887780553673762}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &3477186651532935101
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 946504801284560389}
+  m_Layer: 0
+  m_Name: SprayStartPos
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &946504801284560389
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3477186651532935101}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.5523314, y: 0.02, z: 0.08094001}
+  m_LocalScale: {x: 1.0428482, y: 2.0234723, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2144645058634830028}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4012940762324068254
 GameObject:

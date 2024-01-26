@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 class EnemyController : MonoBehaviour
 {
+    public EnemyManager enemyManager;
     public PlayerController player;
     public GameObject enemyWeapon;
     public Rigidbody2D selfRigidbody;
@@ -72,7 +73,7 @@ class EnemyController : MonoBehaviour
         }
         if (theSlider.value <= 0)
         {
-            Destroy(gameObject);
+            enemyManager.DestroyEnemy(gameObject);
         }
     }
 

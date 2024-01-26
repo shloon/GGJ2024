@@ -430,7 +430,7 @@ MonoBehaviour:
   yMovementFactor: 0
   speed: 1.5
   actorAnimator: {fileID: 7953955847510029119}
-  theSlider: {fileID: 0}
+  theSlider: {fileID: 8149651085844558222}
   isNearEnemy: 0
   theTimer: 1
   isHurt: 0

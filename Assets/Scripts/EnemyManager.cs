@@ -63,7 +63,14 @@ public class EnemyManager : MonoBehaviour
         EnemyController ctrl = newEnemy.GetComponent<EnemyController>();
         ctrl.player = player;
         ctrl.possibleTargets = new List<Transform>(possibleTargets);
+        ctrl.enemyManager = this;
 
         newEnemy.transform.position = new Vector2(Random.Range(-10f, 10f), Random.Range(-5f, 1f));
+    }
+
+    public void DestroyEnemy(GameObject enemy)
+    {
+        GameObject.Destroy(enemy);
+        enemies.Remove(enemy);
     }
 }

@@ -241,6 +241,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4884983423353888633}
+  - {fileID: 1863651570012933608}
   m_Father: {fileID: 111846752173777704}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &5493887435493781610
@@ -463,13 +464,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4699c1ad676e70c4ea573250229269fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hpBar: {fileID: 0}
+  staminaBar: {fileID: 0}
   playerObject: {fileID: 3861687051729213323}
   playerRB: {fileID: 6551088511375664836}
   speed: 3
+  sprintSpeed: 0
+  hasBeenHit: 0
+  timer: 2
   yMovementFactor: 0.5
-  staminaBar: {fileID: 0}
   staminaIncreaseRate: 0.1
+  Kane: {fileID: 0}
   theGun: {fileID: 1416691368437275580}
+  theSpray: {fileID: 0}
   staminaDecreaseRate: 0.5
   isShooting: 0
 --- !u!50 &6551088511375664836
@@ -564,6 +571,37 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3504806109074471776}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &6513378114178234584
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1863651570012933608}
+  m_Layer: 0
+  m_Name: SprayStartPos
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1863651570012933608
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6513378114178234584}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -7.832169, y: -5.2814975, z: 0.08094001}
+  m_LocalScale: {x: 1.0428482, y: 2.0234723, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6251174512420133834}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8754257951742265572
 GameObject:
