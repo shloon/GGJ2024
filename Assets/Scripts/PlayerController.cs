@@ -11,43 +11,21 @@ public class PlayerController : MonoBehaviour
     [SerializeField] public GameObject theGun;
     public Slider staminaBar;
     public bool isShooting;
-    // Start is called before the first frame update
     void Start()
     {
         staminaBar.value = 1;
         isShooting = false;
     }
 
-    // Update is called once per frame
     void Update()
-    
     {
-        //if(Input.GetKeyDown(KeyCode.A))
-        //  {
-        //      Debug.Log("Pressed A");
-        //      playerRB.AddForce(Vector2.left * speed ,ForceMode2D.Force);
-        //  }
-        //  if (Input.GetKeyDown(KeyCode.D))
-        //  {
-        //      playerRB.AddForce(Vector2.right * speed, ForceMode2D.Force);
-        //  }
-        //  if (Input.GetKeyDown(KeyCode.W))
-        //  {
-        //      playerRB.AddForce(Vector2.up * speed, ForceMode2D.Force); ;
-        //  }
-        //  if (Input.GetKey(KeyCode.S))
-        //  {
-        //      playerRB.AddForce(Vector2.down * speed, ForceMode2D.Force);
-        //  }
-
-        
-        float horizontalInput = Input.GetAxis("Horizontal");
-        float verticalInput = Input.GetAxis("Vertical");
+        float horizontalInput = Input.GetAxisRaw("Horizontal");
+        float verticalInput = Input.GetAxisRaw("Vertical");
 
         Vector2 movement = new Vector2(horizontalInput, verticalInput).normalized * speed;
         playerRB.velocity = movement;
 
-        if(Input.GetKey(KeyCode.P))
+        if (Input.GetKey(KeyCode.P))
         {
             if (staminaBar.value != 0)
                 theGun.SetActive(true);
@@ -56,12 +34,12 @@ public class PlayerController : MonoBehaviour
             isShooting = true;
             staminaBar.value -= 0.0003f;
         }
-        if(Input.GetKeyUp(KeyCode.P))
+        if (Input.GetKeyUp(KeyCode.P))
         {
             theGun.SetActive(false);
             isShooting = false;
         }
-        if(staminaBar.value != 1)
+        if (staminaBar.value != 1)
         {
             if (!isShooting)
             {
@@ -69,10 +47,10 @@ public class PlayerController : MonoBehaviour
             }
         }
     }
-    
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        
+
         if (collision.gameObject.tag == "Stopper")
         {
             Debug.Log("Touched Wall");
