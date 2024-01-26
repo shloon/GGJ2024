@@ -4,20 +4,22 @@ using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
+    [Header("GUI")]
+    public Slider hpBar;
+    public Slider staminaBar;
+
     [Header("Player")]
     public GameObject playerObject;
     public Rigidbody2D playerRB;
     public float speed;
-    public Vector2 sprintSpeed;
+    public float sprintSpeed;
     bool isSprinting;
-    public Slider hpBar;
     public bool hasBeenHit;
     public float timer = 2f;
     float tempTimer;
     public float yMovementFactor;
 
     [Header("Stamina")]
-    public Slider staminaBar;
     public float staminaIncreaseRate;
     bool hasNoStamina;
 
@@ -42,77 +44,54 @@ public class PlayerController : MonoBehaviour
         float horizontalInput = Input.GetAxisRaw("Horizontal");
         float verticalInput = Input.GetAxisRaw("Vertical");
 
-        Vector2 movement = new Vector2(horizontalInput, verticalInput * yMovementFactor); //this vectror isn't normalized to emulate the movement in games like lf2 or "dad and I"
-        movement *= speed;
-        playerRB.velocity = movement;
-
-        Vector2 playerMovement;
-        if (Input.GetKey(KeyCode.LeftShift) && !hasNoStamina)
+        // detect sprinting
+        if (isSprinting && !(horizontalInput == 0 && verticalInput == 0))
         {
-            playerMovement = Vector2.Scale(movement, sprintSpeed);
-            isSprinting = true;
-        }
-        else
-        {
-            playerMovement = movement * speed;
-        }
-        playerRB.velocity = playerMovement;
-
-        if (isSprinting)
-        {
-            if ((Input.GetAxisRaw("Horizontal") != 0) || (Input.GetAxisRaw("Vertical") != 0))
+            staminaBar.value -= staminaDecreaseRate * 1.2f * Time.deltaTime;
+            if (staminaBar.value <= 0)
             {
-                staminaBar.value -= staminaDecreaseRate * 1.2f * Time.deltaTime;
-                if (staminaBar.value <= 0)
-                {
-                    hasNoStamina = true;
-                    isSprinting = false;
-                }
+                hasNoStamina = true;
+                isSprinting = false;
             }
         }
 
-        // detect sprinting
         if (Input.GetKeyUp(KeyCode.LeftShift))
         {
             isSprinting = false;
-            if (hasNoStamina)
-                hasNoStamina = false;
+            hasNoStamina = false;
         }
 
         // gun attack
         if (Input.GetKey(KeyCode.P))
         {
-            if (staminaBar.value != 0)
-                theGun.SetActive(true);
-            else
-                theGun.SetActive(false);
+            theGun.SetActive(staminaBar.value != 0);
             isShooting = true;
             staminaBar.value -= staminaDecreaseRate * Time.deltaTime;
         }
+
         if (Input.GetKeyUp(KeyCode.P))
         {
             theGun.SetActive(false);
             isShooting = false;
         }
 
-        // stamina increasing
-        if (staminaBar.value != 1)
+        // stamina increasing automagically
+        if (staminaBar.value <= 1 && !(isShooting || isSprinting || hasNoStamina))
         {
-            if (!isShooting && !isSprinting && !hasNoStamina)
-            {
-                staminaBar.value += staminaIncreaseRate * Time.deltaTime;
-            }
+            staminaBar.value += staminaIncreaseRate * Time.deltaTime;
         }
 
         //Face the direction of movement
-        if (Input.GetAxisRaw("Horizontal") > 0)
+        if (horizontalInput > 0)
         {
-            Vector3 temp = this.transform.localScale; temp.x = 1;
+            Vector3 temp = this.transform.localScale;
+            temp.x = 1;
             this.transform.localScale = temp;
         }
-        else if (Input.GetAxisRaw("Horizontal") < 0)
+        else if (horizontalInput < 0)
         {
-            Vector3 temp = this.transform.localScale; temp.x = -1;
+            Vector3 temp = this.transform.localScale;
+            temp.x = -1;
             this.transform.localScale = temp;
         }
 
@@ -127,10 +106,24 @@ public class PlayerController : MonoBehaviour
             if (timer <= 0)
             {
                 Debug.Log("You need to take damage");
-                //TakeDamage();
                 timer = tempTimer;
             }
         }
+
+        // actual movement handling
+        Vector2 movement = new Vector2(horizontalInput, verticalInput * yMovementFactor); //this vectror isn't normalized to emulate the movement in games like lf2 or "dad and I"
+        movement *= speed;
+        Vector2 playerMovement;
+        if (Input.GetKey(KeyCode.LeftShift) && !hasNoStamina)
+        {
+            playerMovement = movement * sprintSpeed;
+            isSprinting = true;
+        }
+        else
+        {
+            playerMovement = movement * speed;
+        }
+        playerRB.velocity = playerMovement;
     }
 
     public void KillPlayer()
@@ -141,12 +134,10 @@ public class PlayerController : MonoBehaviour
     public void TakeDamage()
     {
         hpBar.value -= 0.1f;
-        Debug.Log(hpBar.value);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-
         if (collision.gameObject.tag == "Stopper")
         {
             Debug.Log("Touched Wall");
@@ -155,9 +146,7 @@ public class PlayerController : MonoBehaviour
         if (collision.gameObject.tag == "Enemy")
         {
             hasBeenHit = true;
-
         }
-
     }
 
     private void OnCollisionExit2D(Collision2D collision)
@@ -166,8 +155,6 @@ public class PlayerController : MonoBehaviour
         {
             hasBeenHit = false;
             timer = tempTimer;
-
         }
     }
-
 }
