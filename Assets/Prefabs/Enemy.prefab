@@ -421,6 +421,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa708dce28126b14387887e536a9b121, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyManager: {fileID: 0}
   player: {fileID: 0}
   enemyWeapon: {fileID: 5904749774830131250}
   selfRigidbody: {fileID: 8986048555174842841}
@@ -434,6 +435,7 @@ MonoBehaviour:
   isNearEnemy: 0
   theTimer: 1
   isHurt: 0
+  nowAttacking: 0
   hittingAnimationClip: {fileID: 7400000, guid: 383194c0f8057974ea58958c862e313b, type: 2}
 --- !u!50 &8986048555174842841
 Rigidbody2D:
@@ -491,7 +493,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: -0.18, y: 0}

@@ -21,6 +21,7 @@ class EnemyController : MonoBehaviour
     public bool isNearEnemy;
     public float theTimer = 1f;
     public bool isHurt;
+    public bool nowAttacking = false;
 
     public AnimationClip hittingAnimationClip;
     public void Start()
@@ -35,18 +36,29 @@ class EnemyController : MonoBehaviour
 
     public void Update()
     {
+        Debug.Log(isNearEnemy);
+
+
+
         Vector3 playerPosition = player.transform.position;
         Vector3 thisPosition = transform.position;
         Vector2 distanceToTarget = currentTarget.localPosition + playerPosition - thisPosition;
 
         //Walk towards the target
-        Vector2 directionsToMove = vectorSigns(distanceToTarget);
-        directionsToMove.y *= yMovementFactor;
-        Vector2 nextVelocity = directionsToMove * speed;
-        Vector2 step = Time.deltaTime * nextVelocity;
-        if (Mathf.Abs(step.x) > Mathf.Abs(distanceToTarget.x)) { nextVelocity.x = 0; }
-        if (Mathf.Abs(step.y) > Mathf.Abs(distanceToTarget.y)) { nextVelocity.y = 0; }
-        selfRigidbody.velocity = nextVelocity;
+        if (!nowAttacking)
+        {
+            Vector2 directionsToMove = vectorSigns(distanceToTarget);
+            directionsToMove.y *= yMovementFactor;
+            Vector2 nextVelocity = directionsToMove * speed;
+            Vector2 step = Time.deltaTime * nextVelocity;
+            if (Mathf.Abs(step.x) > Mathf.Abs(distanceToTarget.x)) { nextVelocity.x = 0; }
+            if (Mathf.Abs(step.y) > Mathf.Abs(distanceToTarget.y)) { nextVelocity.y = 0; }
+            selfRigidbody.velocity = nextVelocity;
+        }
+        else
+        {
+            selfRigidbody.velocity = Vector2.zero;
+        }
 
         /////
         theTimer -= Time.deltaTime;
@@ -88,6 +100,7 @@ class EnemyController : MonoBehaviour
         if (isNearEnemy)
         {
             enemyWeapon.SetActive(true);
+            nowAttacking = true;
 
             actorAnimator.SetTrigger("Attack");
 
@@ -99,6 +112,7 @@ class EnemyController : MonoBehaviour
 
             }
             enemyWeapon.SetActive(false);
+            nowAttacking = false;
         }
     }
 
@@ -140,12 +154,21 @@ class EnemyController : MonoBehaviour
             Debug.Log("Start Destroying");
             isHurt = true;
         }
+        if (collider.gameObject.CompareTag("Player"))
+        {
+            isNearEnemy = true;
+            Debug.Log("near player");
+        }
     }
     private void OnTriggerExit2D(Collider2D collider)
     {
         if (collider.gameObject.CompareTag("Spray"))
         {
             isHurt = false;
+        }
+        if (collider.gameObject.CompareTag("Player"))
+        {
+            isNearEnemy = false;
         }
     }
 }

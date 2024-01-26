@@ -426,7 +426,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e6176044ae01c58469126f67e988b32c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  numEnemies: 1
+  numEnemies: 8
   player: {fileID: 1788837048}
   possibleTargets:
   - {fileID: 1584204143}
