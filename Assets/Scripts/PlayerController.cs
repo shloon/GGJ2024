@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
@@ -9,6 +10,7 @@ public class PlayerController : MonoBehaviour
     public GameObject playerObject;
     public Rigidbody2D playerRB;
     public Vector2 speed;
+    public Slider hpBar;
 
     [Header("Stamina")]
     public Slider staminaBar;
@@ -22,6 +24,7 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         staminaBar.value = 1;
+        hpBar.value = 1;
         isShooting = false;
     }
 
@@ -55,6 +58,16 @@ public class PlayerController : MonoBehaviour
                 staminaBar.value += staminaIncreaseRate * Time.deltaTime;
             }
         }
+
+        if (hpBar.value == 0)
+        {
+            SceneManager.LoadScene("GameOverScene");
+        }
+    }
+
+    public void KillPlayer()
+    {
+        hpBar.value = 0;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
