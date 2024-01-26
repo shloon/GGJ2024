@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -17,10 +15,8 @@ public class PlayerController : MonoBehaviour
     [Header("Stamina")]
     public Slider staminaBar;
     public float staminaIncreaseRate;
-    // the oo in ooStamina is Out Of.
-    //public float ooStaminaLockTimer = 1; 
-    //float staminaLockTimer;
     bool hasNoStamina;
+
     [Header("Gun")]
     public GameObject theGun;
     public float staminaDecreaseRate;
@@ -30,7 +26,6 @@ public class PlayerController : MonoBehaviour
     {
         staminaBar.value = 1;
         hpBar.value = 1;
-        //staminaLockTimer = ooStaminaLockTimer;
         isShooting = false;
         isSprinting = false;
         hasNoStamina = false;
@@ -41,17 +36,22 @@ public class PlayerController : MonoBehaviour
         float horizontalInput = Input.GetAxisRaw("Horizontal");
         float verticalInput = Input.GetAxisRaw("Vertical");
         Vector2 movement = new Vector2(horizontalInput, verticalInput).normalized;
-        if ((Input.GetKey(KeyCode.LeftShift)&&!hasNoStamina))
+
+        Vector2 playerMovement;
+        if (Input.GetKey(KeyCode.LeftShift) && !hasNoStamina)
         {
-            movement = Vector2.Scale(movement, sprintSpeed);
+            playerMovement = Vector2.Scale(movement, sprintSpeed);
             isSprinting = true;
         }
         else
-            movement = Vector2.Scale(movement, speed);
-        playerRB.velocity = movement;
-        if(isSprinting)
         {
-            if (((Input.GetAxisRaw("Horizontal") != 0) || (Input.GetAxisRaw("Vertical") != 0)))
+            playerMovement = Vector2.Scale(movement, speed);
+        }
+        playerRB.velocity = playerMovement;
+
+        if (isSprinting)
+        {
+            if ((Input.GetAxisRaw("Horizontal") != 0) || (Input.GetAxisRaw("Vertical") != 0))
             {
                 staminaBar.value -= staminaDecreaseRate * 1.2f * Time.deltaTime;
                 if (staminaBar.value <= 0)
@@ -61,22 +61,17 @@ public class PlayerController : MonoBehaviour
                 }
             }
         }
-        //if(hasNoStamina)
-        //{
-        //    staminaLockTimer-= Time.deltaTime;
-        //}
-        //if(staminaLockTimer<=0)
-        //{
-        //    staminaLockTimer = ooStaminaLockTimer;
-        //    hasNoStamina = false;
-        //}
+
+        // detect sprinting
         if (Input.GetKeyUp(KeyCode.LeftShift))
         {
             isSprinting = false;
             if (hasNoStamina)
                 hasNoStamina = false;
         }
-            if (Input.GetKey(KeyCode.P))
+
+        // gun attack
+        if (Input.GetKey(KeyCode.P))
         {
             if (staminaBar.value != 0)
                 theGun.SetActive(true);
@@ -90,14 +85,17 @@ public class PlayerController : MonoBehaviour
             theGun.SetActive(false);
             isShooting = false;
         }
+
+        // stamina increasing
         if (staminaBar.value != 1)
         {
-            if (!isShooting&&!isSprinting&&!hasNoStamina)
+            if (!isShooting && !isSprinting && !hasNoStamina)
             {
                 staminaBar.value += staminaIncreaseRate * Time.deltaTime;
             }
         }
 
+        // game over handling
         if (hpBar.value == 0)
         {
             SceneManager.LoadScene("GameOverScene");
@@ -107,14 +105,5 @@ public class PlayerController : MonoBehaviour
     public void KillPlayer()
     {
         hpBar.value = 0;
-    }
-
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-
-        if (collision.gameObject.tag == "Stopper")
-        {
-            Debug.Log("Touched Wall");
-        }
     }
 }
