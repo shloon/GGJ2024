@@ -140,7 +140,7 @@ MonoBehaviour:
   corners: []
   currentTarget: {fileID: 0}
   yMovementFactor: 0
-  speed: 0
+  speed: 1.5
   isChasing: 1
   actorAnimator: {fileID: 7953955847510029119}
   isNearEnemy: 0
