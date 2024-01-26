@@ -29,7 +29,7 @@ class EnemyController : MonoBehaviour
                 player.transform.position.x - (-1 * transform.position.x) >= 1.90f)
             {
 
-                Invoke("AttackPlayer", 1f);
+                Invoke("AttackPlayer", 0.5f);
             }
         }
         else
@@ -38,7 +38,7 @@ class EnemyController : MonoBehaviour
                 player.transform.position.x - (transform.position.x) >= 1.90f)
             {
 
-                Invoke("AttackPlayer", 1f);
+                Invoke("AttackPlayer", 0.5f);
             }
         }
         if(isNearEnemy)
@@ -66,7 +66,7 @@ class EnemyController : MonoBehaviour
             actorAnimator.SetTrigger("Attack");
             
 
-            yield return new WaitForSeconds(0.8f);
+            yield return new WaitForSeconds(0.5f);
             player.TakeDamage();
             actorAnimator.ResetTrigger("Attack");
             enemyWeapon.SetActive(false);
