@@ -436,7 +436,7 @@ MonoBehaviour:
   - {fileID: 1859099418}
   enemyPrefab: {fileID: 3349321811400204675, guid: d2bf92c6a7d604e458d4d54c3109f3e3, type: 3}
   initialStunTime: 0.3
-  enemiesInWave: 010000000200000003000000
+  enemiesInWave: 0a0000000200000003000000
   timeBetweenSpawns: 1
   timeBetweenWaves: 5
   waveTimer: 0
@@ -1840,7 +1840,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1749646755
 RectTransform:
   m_ObjectHideFlags: 0
