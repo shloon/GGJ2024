@@ -35,6 +35,11 @@ class EnemyController : MonoBehaviour
     public float healthFillRate;
 
     public AnimationClip hittingAnimationClip;
+
+    public AudioSource thisAudioSource;
+    public AudioClip[] gigglingSounds;
+    public AudioClip[] fallingSounds;
+
     public void Start()
     {
         isNearEnemy = false;
@@ -44,6 +49,7 @@ class EnemyController : MonoBehaviour
         currentTarget = possibleTargets[0];
         selfRigidbody = GetComponent<Rigidbody2D>();
         thisAnimator = GetComponent<Animator>();
+        thisAudioSource = GetComponent<AudioSource>();
     }
 
     public void Update()
@@ -100,6 +106,7 @@ class EnemyController : MonoBehaviour
         if (theSlider.value <= 0)
         {
             //enemyManager.DestroyEnemy(gameObject);
+            if (!isLaughing) thisAudioSource.PlayOneShot(gigglingSounds[Random.Range(0, gigglingSounds.Length)]);
             isLaughing = true;
         }
         if (isLaughing)
@@ -142,6 +149,8 @@ class EnemyController : MonoBehaviour
     IEnumerator FlipOnBanana()
     {
         thisAnimator.Play("spin");
+
+        thisAudioSource.PlayOneShot(fallingSounds[Random.Range(0,fallingSounds.Length)]);
 
         nowSlipping = true;
 

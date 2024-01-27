@@ -44,6 +44,7 @@ public class PlayerController : MonoBehaviour
     public AudioClip gettingHurtSound2;
     public AudioClip gettingHurtSound3;
     public AudioSource vfxAudioSource;
+    public AudioClip[] deathSounds;
 
     void Start()
     {
@@ -56,6 +57,7 @@ public class PlayerController : MonoBehaviour
         tempTimer = timer;
         shootingAudioSource.Play();
         shootingAudioSource.Pause();
+        vfxAudioSource = GetComponent<AudioSource>();
     }
 
     void Update()
@@ -144,6 +146,7 @@ public class PlayerController : MonoBehaviour
         // game over handling
         if (hpBar.value == 0)
         {
+            vfxAudioSource.PlayOneShot(deathSounds[Random.Range(0, deathSounds.Length)]);
             SceneManager.LoadScene("GameOverScene");
         }
         if (hasBeenHit)
