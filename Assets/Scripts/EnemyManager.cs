@@ -21,10 +21,14 @@ public class EnemyManager : MonoBehaviour
     public float waveTimer;
     public int enemyCounter, waveCounter;
 
+    public AudioSource thisAudioSource;
+    public AudioClip[] laughingSounds;
+
 
     public void Start()
     {
         enemiesInWave = NumberOfEnemies(0);
+        thisAudioSource = GetComponent<AudioSource>();
     }
 
     private void Update()
@@ -110,7 +114,8 @@ public class EnemyManager : MonoBehaviour
 
     public void DestroyEnemy(GameObject enemy)
     {
-        GameObject.Destroy(enemy);
+        GameObject.Destroy(enemy, 1f);
         enemies.Remove(enemy);
+        thisAudioSource.PlayOneShot(laughingSounds[Random.Range(0, laughingSounds.Length)]);
     }
 }
