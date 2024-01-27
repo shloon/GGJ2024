@@ -8,7 +8,6 @@ class EnemyController : MonoBehaviour
 {
     public EnemyManager enemyManager;
     public PlayerController player;
-    public GameObject enemySprite;
     public GameObject enemyWeapon;
     public Rigidbody2D selfRigidbody;
     public List<Transform> possibleTargets; //the enemy may walk to any of the targets
@@ -88,15 +87,11 @@ class EnemyController : MonoBehaviour
         }
         if (player.gameObject.transform.position.x - transform.position.x >= 0)
         {
-            var t = enemySprite.transform.localScale;
-            t.x = Mathf.Abs(t.x) * 1;
-            enemySprite.transform.localScale = t;
+            transform.localScale = new Vector3(1, 1, 1);
         }
         if (player.gameObject.transform.position.x - transform.position.x <= 0)
         {
-            var t = enemySprite.transform.localScale;
-            t.x = Mathf.Abs(t.x) * -1;
-            enemySprite.transform.localScale = t;
+            transform.localScale = new Vector3(-1, 1, 1);
         }
         if (isHurt)
         {

@@ -266,6 +266,8 @@ MonoBehaviour:
   gettingHurtSound2: {fileID: 8300000, guid: 14aebc3ba14d60c4bab7a4400a460676, type: 3}
   gettingHurtSound3: {fileID: 8300000, guid: 20c9db59b0ead504b87da2b69938486d, type: 3}
   vfxAudioSource: {fileID: 7611317065228497146}
+  deathSounds:
+  - {fileID: 8300000, guid: fdb6096340481a047b142ab4c8cca5fa, type: 3}
 --- !u!50 &6551997634865118121
 Rigidbody2D:
   serializedVersion: 4

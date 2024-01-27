@@ -57,7 +57,6 @@ public class PlayerController : MonoBehaviour
         tempTimer = timer;
         shootingAudioSource.Play();
         shootingAudioSource.Pause();
-        vfxAudioSource = GetComponent<AudioSource>();
     }
 
     void Update()
@@ -146,7 +145,7 @@ public class PlayerController : MonoBehaviour
         // game over handling
         if (hpBar.value == 0)
         {
-            //vfxAudioSource.PlayOneShot(deathSounds[Random.Range(0, deathSounds.Length)]);
+            vfxAudioSource.PlayOneShot(deathSounds[Random.Range(0, deathSounds.Length)]);
             SceneManager.LoadScene("GameOverScene");
         }
         if (hasBeenHit)
@@ -174,6 +173,13 @@ public class PlayerController : MonoBehaviour
         }
         playerRB.velocity = playerMovement;
 
+        //movement animation handling
+        if(Input.GetAxisRaw("Horizontal") == 0 && Input.GetAxisRaw("Vertical") == 0)
+        {
+            playerAnimator.SetBool("isMoving", false);
+        }
+        else { playerAnimator.SetBool("isMoving", true); }
+
     }
 
     public void KillPlayer()
@@ -197,7 +203,7 @@ public class PlayerController : MonoBehaviour
     {
         if (collision.gameObject.tag == "Stopper")
         {
-            Debug.Log("Touched Wall");
+            //Debug.Log("Touched Wall");
         }
 
         if (collision.gameObject.tag == "Enemy")
