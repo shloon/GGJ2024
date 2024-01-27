@@ -26,7 +26,6 @@ public class PlayerController : MonoBehaviour
 
     [Header("Gun")]
     public GameObject Kane;
-    public GameObject theGun;
     public GameObject theSpray;
     public float gunStaminaConsumption;
     public bool isShooting;
@@ -77,27 +76,21 @@ public class PlayerController : MonoBehaviour
             if (staminaBar.value != 0)
             {
                 theSpray.transform.position = Kane.transform.position;
-                theGun.SetActive(true);
+                isShooting = true;
+                if (!playerAudioScource.isPlaying) playerAudioScource.UnPause();
                 theSpray.SetActive(true);
             }
             else
             {
-                theGun.SetActive(false);
+                playerAudioScource.Pause();
                 theSpray.gameObject.SetActive(false);
             }
-            if (playerAudioScource.clip == null)
-            {
-                playerAudioScource.clip = shootingSound;
-                playerAudioScource.Play();
-            }
 
-            isShooting = true;
             staminaBar.value -= gunStaminaConsumption * Time.deltaTime;
         }
 
         if (Input.GetKeyUp(KeyCode.P))
         {
-            theGun.SetActive(false);
             theSpray.SetActive(false);
             isShooting = false;
             playerAudioScource.clip = null;
