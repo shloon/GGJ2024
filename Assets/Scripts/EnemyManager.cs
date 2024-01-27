@@ -13,7 +13,9 @@ public class EnemyManager : MonoBehaviour
     List<GameObject> enemies = new();
     List<Transform> currentTargets = new();
 
-    public int[] enemiesInWave;
+    public int initialEnemiesInWave;
+    public float waveIncreaseRate;
+    private int enemiesInWave;
     public float timeBetweenSpawns;
     public float timeBetweenWaves;
     public float waveTimer;
@@ -45,17 +47,14 @@ public class EnemyManager : MonoBehaviour
         }
 
         // advance wave/spawns
-        if (waveCounter < enemiesInWave.Length)
+        waveTimer -= Time.deltaTime;
+        if (enemyCounter == enemiesInWave && waveTimer <= 0)
         {
-            waveTimer -= Time.deltaTime;
-            if (enemyCounter == enemiesInWave[waveCounter] && waveTimer <= 0)
-            {
-                waveCounter++; enemyCounter = 0; waveTimer = timeBetweenWaves;
-            }
-            if (enemyCounter < enemiesInWave[waveCounter] && waveTimer <= 0)
-            {
-                enemyCounter++; waveTimer = timeBetweenSpawns; SpawnEnemy();
-            }
+            enemyCounter = 0; waveTimer = timeBetweenWaves; enemiesInWave = NumberOfEnemies(waveCounter); waveCounter++;
+        }
+        if (enemyCounter < enemiesInWave && waveTimer <= 0)
+        {
+            enemyCounter++; waveTimer = timeBetweenSpawns; SpawnEnemy();
         }
 
         //destroy any laughing enemy when one is slipping
@@ -69,6 +68,12 @@ public class EnemyManager : MonoBehaviour
                 }
             }
         }
+    }
+
+    int NumberOfEnemies(int wavenum)
+    {
+        Debug.Log(wavenum);
+        return (int)(initialEnemiesInWave + wavenum * wavenum * waveIncreaseRate);
     }
 
     public int CountInTargetList(Transform t)

@@ -436,7 +436,8 @@ MonoBehaviour:
   - {fileID: 1859099418}
   enemyPrefab: {fileID: 3349321811400204675, guid: d2bf92c6a7d604e458d4d54c3109f3e3, type: 3}
   initialStunTime: 0.3
-  enemiesInWave: 03000000
+  initialEnemiesInWave: 2
+  waveIncreaseRate: 1
   timeBetweenSpawns: 1
   timeBetweenWaves: 5
   waveTimer: 0
