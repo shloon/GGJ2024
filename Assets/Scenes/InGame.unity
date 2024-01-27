@@ -436,7 +436,7 @@ MonoBehaviour:
   - {fileID: 1859099418}
   enemyPrefab: {fileID: 3349321811400204675, guid: d2bf92c6a7d604e458d4d54c3109f3e3, type: 3}
   initialStunTime: 0.3
-  enemiesInWave: 140000000200000005000000
+  enemiesInWave: 05000000
   timeBetweenSpawns: 1
   timeBetweenWaves: 5
   waveTimer: 0
@@ -1990,7 +1990,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1788837048}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
         m_MethodName: KillPlayer
         m_Mode: 1
@@ -2616,6 +2616,18 @@ PrefabInstance:
       propertyPath: staminaBar
       value: 
       objectReference: {fileID: 931200053}
+    - target: {fileID: 713403314463860298, guid: d1262cd9bcca21a47b20958b2c5e7d74, type: 3}
+      propertyPath: bananaPrefab
+      value: 
+      objectReference: {fileID: 6651230026278600500, guid: f239b450af592144c9b8d6914a634f2e, type: 3}
+    - target: {fileID: 713403314463860298, guid: d1262cd9bcca21a47b20958b2c5e7d74, type: 3}
+      propertyPath: bananaCooldown
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 713403314463860298, guid: d1262cd9bcca21a47b20958b2c5e7d74, type: 3}
+      propertyPath: bananaTargetOffset.y
+      value: -1.5
+      objectReference: {fileID: 0}
     - target: {fileID: 713403314463860298, guid: d1262cd9bcca21a47b20958b2c5e7d74, type: 3}
       propertyPath: gunStaminaConsumption
       value: 0.3

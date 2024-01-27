@@ -17,6 +17,7 @@ class EnemyController : MonoBehaviour
     public float speed;
 
     public Animator actorAnimator;
+    public Animator thisAnimator;
     public Slider theSlider;
     public bool isNearEnemy;
     public float attackTime = 1f;
@@ -28,6 +29,7 @@ class EnemyController : MonoBehaviour
     public bool isHurt;
     public float damageRate;
     public bool nowAttacking = false;
+    public bool nowSlipping = false;
 
     public AnimationClip hittingAnimationClip;
     public void Start()
@@ -38,6 +40,7 @@ class EnemyController : MonoBehaviour
         yMovementFactor = player.yMovementFactor;
         currentTarget = possibleTargets[0];
         selfRigidbody = GetComponent<Rigidbody2D>();
+        thisAnimator = GetComponent<Animator>();
     }
 
     public void Update()
@@ -47,7 +50,7 @@ class EnemyController : MonoBehaviour
         Vector2 distanceToTarget = currentTarget.localPosition + playerPosition - thisPosition;
 
         //Walk towards the target
-        if (!nowAttacking && !isStunned)
+        if (!nowAttacking && !isStunned && !nowSlipping)
         {
             Vector2 directionsToMove = vectorSigns(distanceToTarget);
             directionsToMove.y *= yMovementFactor;
@@ -66,7 +69,7 @@ class EnemyController : MonoBehaviour
         attackCounter -= Time.deltaTime;
         if (stunCounter > 0) { stunCounter -= Time.deltaTime; isStunned = true; } else { isStunned = false; }
 
-        if (isNearEnemy)
+        if (isNearEnemy && !nowSlipping)
         {
             if (attackCounter <= 0)
             {
@@ -98,7 +101,6 @@ class EnemyController : MonoBehaviour
         theSlider.value -= Time.deltaTime * damageRate;
     }
 
-
     IEnumerator AnimataionCoroutine()
     {
         if (isNearEnemy && !isStunned)
@@ -121,6 +123,17 @@ class EnemyController : MonoBehaviour
         }
     }
 
+    IEnumerator FlipOnBanana()
+    {
+        thisAnimator.SetTrigger("IsOnBanana");
+
+        nowSlipping = true;
+
+        yield return new WaitForSeconds(1f);
+
+        nowSlipping = false;
+    }
+
     public Vector2 vectorSigns(Vector2 input)
     {
         return new Vector2(Mathf.Sign(input.x), Mathf.Sign(input.y));
@@ -131,7 +144,7 @@ class EnemyController : MonoBehaviour
         if (collision.gameObject.CompareTag("Player"))
         {
             isNearEnemy = true;
-            Debug.Log("near player");
+            //Debug.Log("near player");
         }
     }
 
@@ -154,9 +167,10 @@ class EnemyController : MonoBehaviour
         if (collider.gameObject.CompareTag("Player"))
         {
             isNearEnemy = true;
-            Debug.Log("near player");
+            //Debug.Log("near player");
         }
     }
+
     private void OnTriggerExit2D(Collider2D collider)
     {
         if (collider.gameObject.CompareTag("Spray"))
