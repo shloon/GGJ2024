@@ -30,6 +30,12 @@ public class PlayerController : MonoBehaviour
     public float gunStaminaConsumption;
     public bool isShooting;
 
+    [Header("Banana")] // bananas are used to make enemies fall so other enemies laugh (die)
+    public GameObject bananaPrefab;
+    public float bananaCooldown;
+    private float bananaTimer;
+    public Vector2 bananaTargetOffset;
+
     [Header("Sounds")]
     public AudioSource shootingAudioSource;
     public AudioClip sparyClip;
@@ -97,6 +103,18 @@ public class PlayerController : MonoBehaviour
             theSpray.SetActive(false);
             shootingAudioSource.Pause();
             isShooting = false;
+        }
+
+        // banana throw
+        if (bananaTimer > 0) { bananaTimer -= Time.deltaTime; }
+        else if (Input.GetKeyDown(KeyCode.B))
+        {
+            bananaTimer = bananaCooldown;
+            GameObject banana = Instantiate(bananaPrefab);
+            banana.transform.position = transform.position;
+            Vector2 temp = (Vector2)transform.position + bananaTargetOffset;
+            banana.GetComponent<BananaController>().target = new Vector2(transform.position.x + Mathf.Sign(transform.localScale.x) * bananaTargetOffset.x, transform.position.y + bananaTargetOffset.y);
+
         }
 
         // stamina increasing automagically
