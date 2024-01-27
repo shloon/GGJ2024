@@ -80,7 +80,7 @@ public class PlayerController : MonoBehaviour
             else
             {
                 theGun.SetActive(false);
-                theSpray.SetActive(false);
+                theSpray.gameObject.SetActive(false);
             }
             theSpray.transform.position = Kane.transform.position;
             theSpray.SetActive(true);
