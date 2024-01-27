@@ -7,7 +7,7 @@ public class SlippingManager : MonoBehaviour
     public GameObject parent;
     private void OnTriggerEnter2D(Collider2D collider)
     {
-        Debug.Log(collider.tag);
+        //Debug.Log(collider.tag);
         if (collider.tag == "Banana")
         {
             if (collider.GetComponent<BananaController>().isActive)

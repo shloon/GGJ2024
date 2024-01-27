@@ -84,7 +84,7 @@ public class EnemyManager : MonoBehaviour
 
     int NumberOfEnemies(int wavenum)
     {
-        Debug.Log(wavenum);
+        //Debug.Log(wavenum);
         return (int)(initialEnemiesInWave + wavenum * wavenum * waveIncreaseRate);
     }
 

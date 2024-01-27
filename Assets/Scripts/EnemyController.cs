@@ -47,7 +47,6 @@ class EnemyController : MonoBehaviour
         yMovementFactor = player.yMovementFactor;
         currentTarget = possibleTargets[0];
         selfRigidbody = GetComponent<Rigidbody2D>();
-        thisAnimator = GetComponent<Animator>();
         thisAudioSource = GetComponent<AudioSource>();
     }
 
@@ -112,6 +111,11 @@ class EnemyController : MonoBehaviour
                 isLaughing = false;
             }
         }
+
+        //animation state machine
+        thisAnimator.SetBool("isWalking", true);
+        if (nowAttacking || nowSlipping || isLaughing || isStunned) thisAnimator.SetBool("isWalking", false);
+
     }
 
     public void TakeDamage()
@@ -143,13 +147,13 @@ class EnemyController : MonoBehaviour
 
     IEnumerator FlipOnBanana()
     {
-        thisAnimator.Play("spin");
+        thisAnimator.SetTrigger("trigFall");
 
         thisAudioSource.PlayOneShot(fallingSounds[Random.Range(0,fallingSounds.Length)]);
 
         nowSlipping = true;
 
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(1.2f);
 
         nowSlipping = false;
     }
@@ -180,7 +184,7 @@ class EnemyController : MonoBehaviour
     {
         if (collider.gameObject.CompareTag("Spray"))
         {
-            Debug.Log("Start Destroying");
+            //Debug.Log("Start Destroying");
             isHurt = true;
             if (!isStunned) { stunCounter = stunTime; isStunned = true; stunTime = stunTime * stunDeterioration; } // start stun and shorten the next one
         }
