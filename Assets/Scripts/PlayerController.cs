@@ -37,7 +37,7 @@ public class PlayerController : MonoBehaviour
     public AudioClip gettingHurtSound2;
     public AudioClip gettingHurtSound3;
     //public AudioClip walkingSound;
-    //public AudioClip shootingSound;
+    public AudioClip shootingSound;
     void Start()
     {
         staminaBar.value = 1;
@@ -85,6 +85,11 @@ public class PlayerController : MonoBehaviour
                 theGun.SetActive(false);
                 theSpray.SetActive(false);
             }
+            if (playerAudioScource.clip == null)
+            {
+                playerAudioScource.clip = shootingSound;
+                playerAudioScource.Play();
+            }
 
             isShooting = true;
             staminaBar.value -= gunStaminaConsumption * Time.deltaTime;
@@ -95,7 +100,7 @@ public class PlayerController : MonoBehaviour
             theGun.SetActive(false);
             theSpray.SetActive(false);
             isShooting = false;
-            //playerAudioScource.Stop();
+            playerAudioScource.clip = null;
         }
 
         // stamina increasing automagically
