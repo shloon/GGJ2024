@@ -255,7 +255,7 @@ MonoBehaviour:
   staminaIncreaseRate: 0.1
   Kane: {fileID: 6404304597107129721}
   theSpray: {fileID: 161065216554360806}
-  gunStaminaConsumption: 0.3
+  gunStaminaConsumption: 0.2
   isShooting: 0
   bananaPrefab: {fileID: 6651230026278600500, guid: f239b450af592144c9b8d6914a634f2e, type: 3}
   bananaCooldown: 5
