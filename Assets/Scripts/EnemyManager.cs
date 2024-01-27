@@ -22,6 +22,11 @@ public class EnemyManager : MonoBehaviour
     public int enemyCounter, waveCounter;
 
 
+    public void Start()
+    {
+        enemiesInWave = NumberOfEnemies(0);
+    }
+
     private void Update()
     {
         //fetch the targets of all enemies
@@ -60,12 +65,15 @@ public class EnemyManager : MonoBehaviour
         //destroy any laughing enemy when one is slipping
         if (enemies.Any(e => e.GetComponent<EnemyController>().nowSlipping))
         {
-            foreach (GameObject enemy in enemies)
+            var enemiesToDestroy = enemies
+                .Select(e => (go: e, ctrl: e.GetComponent<EnemyController>()))
+                .Where(e => e.ctrl.isLaughing)
+                .Select(e => e.go)
+                .ToList();
+
+            foreach (var enemy in enemiesToDestroy)
             {
-                if (enemy.GetComponent<EnemyController>().isLaughing)
-                {
-                    DestroyEnemy(enemy);
-                }
+                DestroyEnemy(enemy);
             }
         }
     }

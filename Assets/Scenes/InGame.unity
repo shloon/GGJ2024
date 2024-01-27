@@ -438,8 +438,8 @@ MonoBehaviour:
   initialStunTime: 0.3
   initialEnemiesInWave: 2
   waveIncreaseRate: 1
-  timeBetweenSpawns: 1
-  timeBetweenWaves: 5
+  timeBetweenSpawns: 2
+  timeBetweenWaves: 20
   waveTimer: 0
   enemyCounter: 0
   waveCounter: 0
@@ -2418,11 +2418,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 713403314463860298, guid: d1262cd9bcca21a47b20958b2c5e7d74, type: 3}
       propertyPath: bananaTargetOffset.x
-      value: 3
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 713403314463860298, guid: d1262cd9bcca21a47b20958b2c5e7d74, type: 3}
       propertyPath: bananaTargetOffset.y
       value: -1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 713403314463860298, guid: d1262cd9bcca21a47b20958b2c5e7d74, type: 3}
+      propertyPath: gunStaminaConsumption
+      value: 0.3
       objectReference: {fileID: 0}
     - target: {fileID: 2202776098469498556, guid: d1262cd9bcca21a47b20958b2c5e7d74, type: 3}
       propertyPath: m_Name
