@@ -426,7 +426,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e6176044ae01c58469126f67e988b32c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  numEnemies: 8
   player: {fileID: 1788837048}
   possibleTargets:
   - {fileID: 1584204143}
@@ -436,6 +435,13 @@ MonoBehaviour:
   - {fileID: 1198406502}
   - {fileID: 1859099418}
   enemyPrefab: {fileID: 3349321811400204675, guid: d2bf92c6a7d604e458d4d54c3109f3e3, type: 3}
+  initialStunTime: 0.3
+  enemiesInWave: 140000000200000005000000
+  timeBetweenSpawns: 1
+  timeBetweenWaves: 5
+  waveTimer: 0
+  enemyCounter: 0
+  waveCounter: 0
 --- !u!4 &404790946
 Transform:
   m_ObjectHideFlags: 0
@@ -2610,6 +2616,14 @@ PrefabInstance:
       propertyPath: staminaBar
       value: 
       objectReference: {fileID: 931200053}
+    - target: {fileID: 713403314463860298, guid: d1262cd9bcca21a47b20958b2c5e7d74, type: 3}
+      propertyPath: gunStaminaConsumption
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 713403314463860298, guid: d1262cd9bcca21a47b20958b2c5e7d74, type: 3}
+      propertyPath: sprintStaminaConsumption
+      value: 0.3
+      objectReference: {fileID: 0}
     - target: {fileID: 862054691391870656, guid: d1262cd9bcca21a47b20958b2c5e7d74, type: 3}
       propertyPath: m_Enabled
       value: 0

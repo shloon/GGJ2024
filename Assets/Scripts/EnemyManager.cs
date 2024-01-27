@@ -5,11 +5,10 @@ using System.Linq;
 
 public class EnemyManager : MonoBehaviour
 {
-    public int numEnemies = 1;
-
     public PlayerController player;
     public List<Transform> possibleTargets; //the enemy may walk to any of the targets
     public GameObject enemyPrefab;
+    public float initialStunTime;
 
     List<GameObject> enemies = new();
     List<Transform> currentTargets = new();
@@ -79,6 +78,7 @@ public class EnemyManager : MonoBehaviour
         ctrl.player = player;
         ctrl.possibleTargets = new List<Transform>(possibleTargets);
         ctrl.enemyManager = this;
+        ctrl.stunTime = initialStunTime;
 
         newEnemy.transform.position = new Vector2(Random.Range(-10f, 10f), Random.Range(-5f, 1f));
     }

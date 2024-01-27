@@ -103,6 +103,7 @@ public class PlayerController : MonoBehaviour
             temp.x = 1;
             this.transform.localScale = temp;
         }
+
         else if (horizontalInput < 0)
         {
             Vector3 temp = this.transform.localScale;
@@ -120,7 +121,6 @@ public class PlayerController : MonoBehaviour
             timer -= Time.deltaTime;
             if (timer <= 0)
             {
-                Debug.Log("You need to take damage");
                 timer = tempTimer;
             }
         }

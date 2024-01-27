@@ -21,7 +21,8 @@ class EnemyController : MonoBehaviour
     public bool isNearEnemy;
     public float attackTime = 1f;
     private float attackCounter; // time between attacks
-    public float stunTime = 0.3f; // can't move or attack after being attacked
+    public float stunTime; // can't move or attack after being attacked
+    public float stunDeterioration; // every subsequent stun is shorter by a fraction
     private float stunCounter;
     public bool isStunned = false;
     public bool isHurt;
@@ -147,7 +148,7 @@ class EnemyController : MonoBehaviour
         {
             Debug.Log("Start Destroying");
             isHurt = true;
-            stunCounter = stunTime; // start stun
+            if (!isStunned) { stunCounter = stunTime; isStunned = true; stunTime = stunTime * stunDeterioration; } // start stun and shorten the next one
         }
         if (collider.gameObject.CompareTag("Player"))
         {
