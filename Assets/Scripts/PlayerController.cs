@@ -143,7 +143,7 @@ public class PlayerController : MonoBehaviour
         // game over handling
         if (hpBar.value == 0)
         {
-            vfxAudioSource.PlayOneShot(deathSounds[Random.Range(0, deathSounds.Length)]);
+            //vfxAudioSource.PlayOneShot(deathSounds[Random.Range(0, deathSounds.Length)]);
             SceneManager.LoadScene("GameOverScene");
         }
         if (hasBeenHit)
