@@ -26,6 +26,7 @@ class EnemyController : MonoBehaviour
     private float stunCounter;
     public bool isStunned = false;
     public bool isHurt;
+    public float damageRate;
     public bool nowAttacking = false;
 
     public AnimationClip hittingAnimationClip;
@@ -94,7 +95,7 @@ class EnemyController : MonoBehaviour
 
     public void TakeDamage()
     {
-        theSlider.value -= 0.002f;
+        theSlider.value -= Time.deltaTime * damageRate;
     }
 
 

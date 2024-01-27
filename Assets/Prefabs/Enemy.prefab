@@ -430,7 +430,7 @@ MonoBehaviour:
   corners: []
   currentTarget: {fileID: 0}
   yMovementFactor: 0
-  speed: 1.5
+  speed: 2
   actorAnimator: {fileID: 7953955847510029119}
   theSlider: {fileID: 8149651085844558222}
   isNearEnemy: 0
@@ -439,6 +439,7 @@ MonoBehaviour:
   stunDeterioration: 0.8
   isStunned: 0
   isHurt: 0
+  damageRate: 0.6
   nowAttacking: 0
   hittingAnimationClip: {fileID: 7400000, guid: 383194c0f8057974ea58958c862e313b, type: 2}
 --- !u!50 &8986048555174842841

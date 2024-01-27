@@ -198,7 +198,8 @@ MonoBehaviour:
   playerObject: {fileID: 2202776098469498556}
   playerRB: {fileID: 6551997634865118121}
   speed: 3
-  sprintSpeed: 5
+  sprintSpeed: 6
+  sprintStaminaConsumption: 0
   hasBeenHit: 0
   timer: 2
   yMovementFactor: 0.5
@@ -206,7 +207,7 @@ MonoBehaviour:
   Kane: {fileID: 6404304597107129721}
   theGun: {fileID: 4706208243081395205}
   theSpray: {fileID: 0}
-  staminaDecreaseRate: 0.3
+  gunStaminaConsumption: 0
   isShooting: 0
 --- !u!50 &6551997634865118121
 Rigidbody2D:
