@@ -10,6 +10,7 @@ public class PlayerController : MonoBehaviour
 
     [Header("Player")]
     public GameObject playerObject;
+    public Animator playerAnimator;
     public Rigidbody2D playerRB;
     public float speed;
     public float sprintSpeed;
@@ -70,6 +71,7 @@ public class PlayerController : MonoBehaviour
             {
                 hasNoStamina = true;
                 isSprinting = false;
+                playerAnimator.SetBool("isSprinting", true);
             }
         }
 
@@ -77,6 +79,7 @@ public class PlayerController : MonoBehaviour
         {
             isSprinting = false;
             hasNoStamina = false;
+            playerAnimator.SetBool("isSprinting", false);
         }
 
         // gun attack
@@ -159,6 +162,7 @@ public class PlayerController : MonoBehaviour
         {
             playerMovement = movement * sprintSpeed;
             isSprinting = true;
+            playerAnimator.SetBool("isSprinting", true);
         }
         else
         {
