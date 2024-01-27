@@ -31,12 +31,13 @@ public class PlayerController : MonoBehaviour
     public bool isShooting;
 
     [Header("Sounds")]
-    public AudioSource playerAudioScource;
+    public AudioSource shootingAudioSource;
+    public AudioClip sparyClip;
     public AudioClip gettingHurtSound1;
     public AudioClip gettingHurtSound2;
     public AudioClip gettingHurtSound3;
-    //public AudioClip walkingSound;
-    public AudioClip shootingSound;
+    public AudioSource vfxAudioSource;
+
     void Start()
     {
         staminaBar.value = 1;
@@ -46,6 +47,8 @@ public class PlayerController : MonoBehaviour
         hasNoStamina = false;
         hasBeenHit = false;
         tempTimer = timer;
+        shootingAudioSource.Play();
+        shootingAudioSource.Pause();
     }
 
     void Update()
@@ -77,12 +80,12 @@ public class PlayerController : MonoBehaviour
             {
                 theSpray.transform.position = Kane.transform.position;
                 isShooting = true;
-                if (!playerAudioScource.isPlaying) playerAudioScource.UnPause();
+                shootingAudioSource.UnPause();
                 theSpray.SetActive(true);
             }
             else
             {
-                playerAudioScource.Pause();
+                shootingAudioSource.Pause();
                 theSpray.gameObject.SetActive(false);
             }
 
@@ -92,8 +95,8 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKeyUp(KeyCode.P))
         {
             theSpray.SetActive(false);
+            shootingAudioSource.Pause();
             isShooting = false;
-            playerAudioScource.clip = null;
         }
 
         // stamina increasing automagically
@@ -157,11 +160,11 @@ public class PlayerController : MonoBehaviour
     {
         int rand = Random.Range(1, 4);
         if (rand == 1)
-            playerAudioScource.PlayOneShot(gettingHurtSound1);
+            vfxAudioSource.PlayOneShot(gettingHurtSound1);
         if (rand == 2)
-            playerAudioScource.PlayOneShot(gettingHurtSound2);
+            vfxAudioSource.PlayOneShot(gettingHurtSound2);
         if (rand == 3)
-            playerAudioScource.PlayOneShot(gettingHurtSound3);
+            vfxAudioSource.PlayOneShot(gettingHurtSound3);
         hpBar.value -= 0.1f;
     }
 
