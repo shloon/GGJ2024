@@ -30,6 +30,13 @@ public class PlayerController : MonoBehaviour
     public float staminaDecreaseRate;
     public bool isShooting;
 
+    [Header("Sounds")]
+    public AudioSource playerAudioScource;
+    public AudioClip gettingHurtSound1;
+    public AudioClip gettingHurtSound2;
+    public AudioClip gettingHurtSound3;
+    //public AudioClip walkingSound;
+    //public AudioClip shootingSound;
     void Start()
     {
         staminaBar.value = 1;
@@ -77,6 +84,7 @@ public class PlayerController : MonoBehaviour
             }
             theSpray.transform.position = Kane.transform.position;
             theSpray.SetActive(true);
+            //playerAudioScource.Play(shootingSound);
 
             isShooting = true;
             staminaBar.value -= staminaDecreaseRate * Time.deltaTime;
@@ -87,6 +95,7 @@ public class PlayerController : MonoBehaviour
             theGun.SetActive(false);
             theSpray.SetActive(false);
             isShooting = false;
+            //playerAudioScource.Stop();
         }
 
         // stamina increasing automagically
@@ -135,8 +144,10 @@ public class PlayerController : MonoBehaviour
         else
         {
             playerMovement = movement * speed;
+            //playerAudioScource.PlayOneShot(walkingSound);
         }
         playerRB.velocity = playerMovement;
+        
     }
 
     public void KillPlayer()
@@ -146,6 +157,13 @@ public class PlayerController : MonoBehaviour
 
     public void TakeDamage()
     {
+        int rand = Random.Range(1, 4);
+        if(rand == 1)
+            playerAudioScource.PlayOneShot(gettingHurtSound1);
+        if(rand==2)
+            playerAudioScource.PlayOneShot(gettingHurtSound2);
+        if (rand == 3)
+            playerAudioScource.PlayOneShot(gettingHurtSound3);
         hpBar.value -= 0.1f;
     }
 
