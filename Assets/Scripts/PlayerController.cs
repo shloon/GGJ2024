@@ -14,6 +14,7 @@ public class PlayerController : MonoBehaviour
     public float speed;
     public float sprintSpeed;
     bool isSprinting;
+    public float sprintStaminaConsumption;
     public bool hasBeenHit;
     public float timer = 2f;
     float tempTimer;
@@ -27,7 +28,7 @@ public class PlayerController : MonoBehaviour
     public GameObject Kane;
     public GameObject theGun;
     public GameObject theSpray;
-    public float staminaDecreaseRate;
+    public float gunStaminaConsumption;
     public bool isShooting;
 
     void Start()
@@ -49,7 +50,7 @@ public class PlayerController : MonoBehaviour
         // detect sprinting
         if (isSprinting && !(horizontalInput == 0 && verticalInput == 0))
         {
-            staminaBar.value -= staminaDecreaseRate * 1.2f * Time.deltaTime;
+            staminaBar.value -= sprintStaminaConsumption * Time.deltaTime;
             if (staminaBar.value <= 0)
             {
                 hasNoStamina = true;
@@ -79,7 +80,7 @@ public class PlayerController : MonoBehaviour
             }
 
             isShooting = true;
-            staminaBar.value -= staminaDecreaseRate * Time.deltaTime;
+            staminaBar.value -= gunStaminaConsumption * Time.deltaTime;
         }
 
         if (Input.GetKeyUp(KeyCode.P))

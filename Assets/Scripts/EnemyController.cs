@@ -19,7 +19,11 @@ class EnemyController : MonoBehaviour
     public Animator actorAnimator;
     public Slider theSlider;
     public bool isNearEnemy;
-    public float theTimer = 1f;
+    public float attackTime = 1f;
+    private float attackCounter; // time between attacks
+    public float stunTime = 0.3f; // can't move or attack after being attacked
+    private float stunCounter;
+    public bool isStunned = false;
     public bool isHurt;
     public bool nowAttacking = false;
 
@@ -36,16 +40,12 @@ class EnemyController : MonoBehaviour
 
     public void Update()
     {
-        Debug.Log(isNearEnemy);
-
-
-
         Vector3 playerPosition = player.transform.position;
         Vector3 thisPosition = transform.position;
         Vector2 distanceToTarget = currentTarget.localPosition + playerPosition - thisPosition;
 
         //Walk towards the target
-        if (!nowAttacking)
+        if (!nowAttacking && !isStunned)
         {
             Vector2 directionsToMove = vectorSigns(distanceToTarget);
             directionsToMove.y *= yMovementFactor;
@@ -60,15 +60,16 @@ class EnemyController : MonoBehaviour
             selfRigidbody.velocity = Vector2.zero;
         }
 
-        /////
-        theTimer -= Time.deltaTime;
+        //attack and stun cooldown
+        attackCounter -= Time.deltaTime;
+        if (stunCounter > 0) { stunCounter -= Time.deltaTime; isStunned = true; } else { isStunned = false; }
 
         if (isNearEnemy)
         {
-            if (theTimer <= 0)
+            if (attackCounter <= 0)
             {
                 StartCoroutine("AnimataionCoroutine");
-                theTimer = 1f;
+                attackCounter = attackTime;
             }
         }
         if (player.gameObject.transform.position.x - transform.position.x >= 0)
@@ -82,6 +83,7 @@ class EnemyController : MonoBehaviour
         if (isHurt)
         {
             TakeDamage();
+            //stunCounter = stunTime;
         }
         if (theSlider.value <= 0)
         {
@@ -97,7 +99,7 @@ class EnemyController : MonoBehaviour
 
     IEnumerator AnimataionCoroutine()
     {
-        if (isNearEnemy)
+        if (isNearEnemy && !isStunned)
         {
             enemyWeapon.SetActive(true);
             nowAttacking = true;
@@ -105,6 +107,7 @@ class EnemyController : MonoBehaviour
             actorAnimator.SetTrigger("Attack");
 
             yield return new WaitForSeconds(0.5f);
+
             if (isNearEnemy)
             {
                 player.TakeDamage();
@@ -119,15 +122,6 @@ class EnemyController : MonoBehaviour
     public Vector2 vectorSigns(Vector2 input)
     {
         return new Vector2(Mathf.Sign(input.x), Mathf.Sign(input.y));
-    }
-
-    public void ChooseNewTarget()
-    {
-        //choose a target around the player
-        //first sort the targets by distance:
-        Vector2 playerPosition = player.transform.position;
-        Vector3 thisPosition = this.transform.position;
-        currentTarget = possibleTargets.OrderBy(target => Vector2.Distance((Vector2)target.localPosition + playerPosition, thisPosition)).First();
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -153,6 +147,7 @@ class EnemyController : MonoBehaviour
         {
             Debug.Log("Start Destroying");
             isHurt = true;
+            stunCounter = stunTime; // start stun
         }
         if (collider.gameObject.CompareTag("Player"))
         {

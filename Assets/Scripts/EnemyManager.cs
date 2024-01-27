@@ -14,11 +14,12 @@ public class EnemyManager : MonoBehaviour
     List<GameObject> enemies = new();
     List<Transform> currentTargets = new();
 
-    void Start()
-    {
-        for (int i = 0; i < numEnemies; ++i)
-            SpawnEnemy();
-    }
+    public int[] enemiesInWave;
+    public float timeBetweenSpawns;
+    public float timeBetweenWaves;
+    public float waveTimer;
+    public int enemyCounter, waveCounter;
+
 
     private void Update()
     {
@@ -41,6 +42,20 @@ public class EnemyManager : MonoBehaviour
 
                 //sort by population and take the first one (least populated)
                 enemy.GetComponent<EnemyController>().currentTarget = closest3.OrderBy(target => CountInTargetList(target)).First();
+            }
+        }
+
+        // advance wave/spawns
+        if (waveCounter < enemiesInWave.Length)
+        {
+            waveTimer -= Time.deltaTime;
+            if (enemyCounter == enemiesInWave[waveCounter] && waveTimer <= 0 && enemies.Count() == 0)
+            {
+                waveCounter++; enemyCounter = 0; waveTimer = timeBetweenWaves;
+            }
+            if (enemyCounter < enemiesInWave[waveCounter] && waveTimer <= 0)
+            {
+                enemyCounter++; waveTimer = timeBetweenSpawns; SpawnEnemy();
             }
         }
     }
