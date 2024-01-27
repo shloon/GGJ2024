@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: -5384794020869900172}
   m_Layer: 0
   m_Name: Banana
-  m_TagString: Untagged
+  m_TagString: Banana
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -136,3 +136,4 @@ MonoBehaviour:
   timeToTarget: 0.5
   origin: {x: 0, y: 0}
   target: {x: 0, y: 0}
+  isActive: 0

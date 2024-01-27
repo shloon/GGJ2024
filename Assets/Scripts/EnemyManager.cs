@@ -48,13 +48,25 @@ public class EnemyManager : MonoBehaviour
         if (waveCounter < enemiesInWave.Length)
         {
             waveTimer -= Time.deltaTime;
-            if (enemyCounter == enemiesInWave[waveCounter] && waveTimer <= 0 && enemies.Count() == 0)
+            if (enemyCounter == enemiesInWave[waveCounter] && waveTimer <= 0)
             {
                 waveCounter++; enemyCounter = 0; waveTimer = timeBetweenWaves;
             }
             if (enemyCounter < enemiesInWave[waveCounter] && waveTimer <= 0)
             {
                 enemyCounter++; waveTimer = timeBetweenSpawns; SpawnEnemy();
+            }
+        }
+
+        //destroy any laughing enemy when one is slipping
+        if (enemies.Any(e => e.GetComponent<EnemyController>().nowSlipping))
+        {
+            foreach (GameObject enemy in enemies)
+            {
+                if (enemy.GetComponent<EnemyController>().isLaughing)
+                {
+                    DestroyEnemy(enemy);
+                }
             }
         }
     }

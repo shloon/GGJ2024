@@ -30,6 +30,8 @@ class EnemyController : MonoBehaviour
     public float damageRate;
     public bool nowAttacking = false;
     public bool nowSlipping = false;
+    public bool isLaughing = false;
+    public float healthFillRate;
 
     public AnimationClip hittingAnimationClip;
     public void Start()
@@ -50,7 +52,7 @@ class EnemyController : MonoBehaviour
         Vector2 distanceToTarget = currentTarget.localPosition + playerPosition - thisPosition;
 
         //Walk towards the target
-        if (!nowAttacking && !isStunned && !nowSlipping)
+        if (!nowAttacking && !isStunned && !nowSlipping && !isLaughing)
         {
             Vector2 directionsToMove = vectorSigns(distanceToTarget);
             directionsToMove.y *= yMovementFactor;
@@ -69,7 +71,7 @@ class EnemyController : MonoBehaviour
         attackCounter -= Time.deltaTime;
         if (stunCounter > 0) { stunCounter -= Time.deltaTime; isStunned = true; } else { isStunned = false; }
 
-        if (isNearEnemy && !nowSlipping)
+        if (isNearEnemy && !nowSlipping && !isLaughing)
         {
             if (attackCounter <= 0)
             {
@@ -92,7 +94,16 @@ class EnemyController : MonoBehaviour
         }
         if (theSlider.value <= 0)
         {
-            enemyManager.DestroyEnemy(gameObject);
+            //enemyManager.DestroyEnemy(gameObject);
+            isLaughing = true;
+        }
+        if (isLaughing)
+        {
+            theSlider.value += Time.deltaTime * healthFillRate;
+            if (theSlider.value >= 1)
+            {
+                isLaughing = false;
+            }
         }
     }
 
@@ -125,7 +136,7 @@ class EnemyController : MonoBehaviour
 
     IEnumerator FlipOnBanana()
     {
-        thisAnimator.SetTrigger("IsOnBanana");
+        thisAnimator.Play("spin");
 
         nowSlipping = true;
 
