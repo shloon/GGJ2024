@@ -12,7 +12,7 @@ public class SlippingManager : MonoBehaviour
         {
             if (collider.GetComponent<BananaController>().isActive)
             {
-                Debug.Log("It works!");
+                //Debug.Log("It works!");
                 parent.GetComponent<EnemyController>().StartCoroutine("FlipOnBanana");
                 Destroy(collider.gameObject);
             }

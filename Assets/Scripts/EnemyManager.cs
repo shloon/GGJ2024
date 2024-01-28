@@ -117,5 +117,6 @@ public class EnemyManager : MonoBehaviour
         GameObject.Destroy(enemy, 1f);
         enemies.Remove(enemy);
         thisAudioSource.PlayOneShot(laughingSounds[Random.Range(0, laughingSounds.Length)]);
+        enemy.GetComponent<EnemyController>().thisAnimator.SetTrigger("trigLaugh");
     }
 }

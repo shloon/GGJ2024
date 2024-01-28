@@ -32,6 +32,7 @@ class EnemyController : MonoBehaviour
     public bool nowSlipping = false;
     public bool isLaughing = false;
     public float healthFillRate;
+    public Renderer smilingFace;
 
     public AnimationClip hittingAnimationClip;
 
@@ -48,6 +49,7 @@ class EnemyController : MonoBehaviour
         currentTarget = possibleTargets[0];
         selfRigidbody = GetComponent<Rigidbody2D>();
         thisAudioSource = GetComponent<AudioSource>();
+        smilingFace.enabled = false;
     }
 
     public void Update()
@@ -102,6 +104,7 @@ class EnemyController : MonoBehaviour
             //enemyManager.DestroyEnemy(gameObject);
             if (!isLaughing) thisAudioSource.PlayOneShot(gigglingSounds[Random.Range(0, gigglingSounds.Length)]);
             isLaughing = true;
+            smilingFace.enabled = true;
         }
         if (isLaughing)
         {
@@ -109,6 +112,7 @@ class EnemyController : MonoBehaviour
             if (theSlider.value >= 1)
             {
                 isLaughing = false;
+                smilingFace.enabled = false;
             }
         }
 
